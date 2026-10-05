@@ -5,16 +5,19 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#0d1214">
   <meta name="description" content="Al Ajamy Food – متابعة سيارات التوزيع في سوريا">
+  <link rel="icon" href="favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="manifest" href="site.webmanifest">
   <title>Al Ajamy Food – سيارات التوزيع</title>
   <style>
     :root {
       --bg: #0d1214;
       --bg2: #090c0e;
-      --panel: #141a1c;
       --text: #eef6f6;
       --muted: #a8b8b7;
       --brand: #3d9b85;
-      --brand2: #2a7a68;
       --accent: #e07a1f;
       --red: #ff3b4e;
       --yellow: #ffcc00;
@@ -41,7 +44,6 @@
     }
     .wrap { max-width: 1200px; margin: 0 auto; padding: 16px 12px 36px; }
 
-    /* Topbar */
     .topbar {
       display: flex; align-items: center; justify-content: space-between; gap: 12px;
       padding: 12px 14px; border-radius: var(--r);
@@ -56,8 +58,9 @@
       width: 52px; height: 52px; border-radius: 14px; overflow: hidden;
       border: 1px solid rgba(255,255,255,.12);
       background: rgba(0,0,0,.25); flex: 0 0 auto;
-      display: grid; place-items: center; font-weight: 900; font-size: 20px; color: var(--brand);
+      display: grid; place-items: center;
     }
+    .logoBox img { width: 100%; height: 100%; object-fit: contain; display: block; }
     .title h1 {
       margin: 0; font-size: var(--fs3); font-weight: 900;
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
@@ -68,79 +71,42 @@
       border: 1px solid rgba(255,255,255,.12); background: rgba(0,0,0,.25);
       color: var(--muted); font-weight: 800; font-size: var(--fs1); white-space: nowrap;
     }
+    @media (max-width: 680px) { .topbar { position: static; } }
 
-    /* Controls */
-    .controls {
-      margin-top: 14px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
-    }
-    .search-box { flex: 1; min-width: 200px; position: relative; }
-    .search-box input {
-      width: 100%; padding: 11px 14px 11px 40px; border-radius: 12px;
-      border: 1px solid rgba(255,255,255,.12); background: rgba(0,0,0,.3);
-      color: var(--text); font-size: var(--fs1); outline: none;
-      transition: border-color .15s;
-    }
-    .search-box input:focus { border-color: var(--brand); }
-    .search-box input::placeholder { color: rgba(168,184,183,.7); }
-    .search-box svg {
-      position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
-      width: 18px; height: 18px; fill: var(--muted); pointer-events: none;
-    }
-    .btn {
-      padding: 10px 16px; border-radius: 12px; border: 1px solid rgba(255,255,255,.12);
-      background: rgba(61,155,133,.15); color: var(--text); font-weight: 700;
-      font-size: var(--fs1); cursor: pointer; transition: .15s; white-space: nowrap;
-    }
-    .btn:hover { background: rgba(61,155,133,.28); }
-    .btn:disabled { opacity: .5; cursor: not-allowed; }
-
-    /* Grid */
     .section {
       margin-top: 14px; padding: 12px; border-radius: var(--r);
       border: 1px solid rgba(255,255,255,.07); background: rgba(255,255,255,.02);
     }
     .grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; }
     @media (max-width: 1050px) { .grid { grid-template-columns: repeat(2, minmax(0,1fr)); } }
-    @media (max-width: 680px) {
-      .grid { grid-template-columns: 1fr; }
-      .topbar { position: static; }
-    }
+    @media (max-width: 680px) { .grid { grid-template-columns: 1fr; } }
 
-    /* Card */
     .card {
       border-radius: var(--r); border: 1.5px solid rgba(255,255,255,.14);
       background: linear-gradient(180deg, rgba(255,255,255,.035), rgba(0,0,0,.12));
-      box-shadow: var(--shadow); overflow: hidden; position: relative;
+      box-shadow: var(--shadow); overflow: hidden;
     }
-    .cardInner { padding: 12px; }
-    .topRow {
-      display: flex; align-items: stretch; justify-content: space-between;
-      gap: 10px; flex-wrap: wrap;
-    }
-    .meta {
-      flex: 1; min-width: 180px; border-radius: var(--r2);
-      border: 1px solid rgba(255,255,255,.1); background: rgba(0,0,0,.22); padding: 10px;
-    }
-    .metaTop {
+    .cardInner { padding: 14px; display: flex; flex-direction: column; gap: 12px; }
+
+    .metaRow {
       display: flex; align-items: center; justify-content: space-between;
-      gap: 8px; flex-wrap: wrap;
+      gap: 10px; flex-wrap: wrap;
     }
     .vehicleName {
       font-size: var(--fs2); font-weight: 900;
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
     .branchTag {
-      font-size: 12px; font-weight: 800; padding: 4px 9px; border-radius: 999px;
-      border: 1px solid rgba(61,155,133,.3); background: rgba(61,155,133,.12);
+      font-size: 14px; font-weight: 800; padding: 6px 12px; border-radius: 999px;
+      border: 1px solid rgba(61,155,133,.35); background: rgba(61,155,133,.14);
       white-space: nowrap;
     }
-    .metaLine {
-      margin-top: 8px; font-size: var(--fs1); color: var(--muted);
-      display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
-    }
-    .metaLine b { color: var(--text); font-weight: 800; }
 
-    /* Phone link */
+    .driverRow {
+      font-size: var(--fs1); color: var(--muted);
+      display: flex; flex-wrap: wrap; gap: 12px; align-items: center;
+    }
+    .driverRow b { color: var(--text); font-weight: 800; }
     .phone-link {
       display: inline-flex; align-items: center; gap: 5px;
       color: var(--text); text-decoration: none; transition: color .15s;
@@ -148,45 +114,67 @@
     .phone-link:hover { color: var(--brand); }
     .phone-icon { width: 15px; height: 15px; fill: currentColor; flex: 0 0 auto; }
 
-    /* Syrian modern plate */
+    /* Syrian plate – centered */
+    .plateWrap { display: flex; justify-content: center; width: 100%; }
     .plate {
       direction: ltr; unicode-bidi: embed;
       display: flex; align-items: stretch;
       border-radius: 8px; overflow: hidden;
-      border: 3px solid #222; background: #fff;
-      box-shadow: 0 3px 10px rgba(0,0,0,.35);
-      min-width: 210px; max-width: 320px; flex: 0 0 auto;
-      font-weight: 900;
+      border: 3px solid #1a1a1a; background: #fff;
+      box-shadow: 0 4px 14px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.5);
+      min-width: 240px; max-width: 340px; width: 100%;
+      font-weight: 900; height: 56px;
     }
+    .plate .left-num,
+    .plate .right-num {
+      background: #fff; color: #000;
+      display: flex; align-items: center; justify-content: center;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 20px; letter-spacing: 1.5px;
+      padding: 0 10px; white-space: nowrap;
+    }
+    .plate .left-num { min-width: 52px; font-size: 18px; letter-spacing: 1px; }
+    .plate .right-num { flex: 1; }
     .plate .flag-box {
-      width: 58px;
-      background: linear-gradient(to bottom, #007A3D 0 33.33%, #FFFFFF 33.33% 66.66%, #000000 66.66% 100%);
-      color: #111; display: flex; flex-direction: column;
+      width: 64px; flex-shrink: 0;
+      background: linear-gradient(to bottom,
+        #007A3D 0%, #007A3D 33.33%,
+        #FFFFFF 33.33%, #FFFFFF 66.66%,
+        #000000 66.66%, #000000 100%);
+      display: flex; flex-direction: column;
       align-items: center; justify-content: center;
-      position: relative; border-right: 2px solid #444; flex-shrink: 0;
+      position: relative;
+      border-left: 1.5px solid #333;
+      border-right: 1.5px solid #333;
     }
     .plate .flag-box .ar {
-      font-size: 9px; font-weight: 900; line-height: 1.1; margin-bottom: 2px;
-      text-shadow: 0 0 1px rgba(255,255,255,.8);
+      font-size: 9px; font-weight: 900; line-height: 1;
+      color: #111; margin-bottom: 3px;
+      text-shadow: 0 0 2px #fff;
     }
     .plate .flag-box .syr {
-      font-size: 11px; font-weight: 900; letter-spacing: 0.5px;
-      background: rgba(255,255,255,.9); padding: 1px 3px; border-radius: 2px;
+      font-size: 11px; font-weight: 900; letter-spacing: 0.6px;
+      background: rgba(255,255,255,.92); color: #111;
+      padding: 1px 4px; border-radius: 2px;
     }
-    .plate .num {
-      flex: 1; background: #fff; color: #000; padding: 6px 10px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 17px; font-family: "Courier New", Courier, monospace;
-      letter-spacing: 1.2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    .plate .flag-box::after {
+      content: "★ ★ ★";
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 7px; color: #CE1126; line-height: 1;
+      letter-spacing: -1px; opacity: .9;
+      margin-top: -1px;
     }
     @media (max-width: 680px) {
-      .plate { min-width: 180px; max-width: 100%; }
-      .plate .flag-box { width: 50px; }
-      .plate .num { font-size: 15px; letter-spacing: 1px; }
+      .plate { min-width: 200px; height: 50px; }
+      .plate .left-num { font-size: 16px; min-width: 44px; padding: 0 6px; }
+      .plate .right-num { font-size: 17px; padding: 0 8px; }
+      .plate .flag-box { width: 56px; }
+      .plate .flag-box .ar { font-size: 8px; }
+      .plate .flag-box .syr { font-size: 10px; }
     }
 
-    /* Blocks */
-    .blocks { margin-top: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .blocks { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     @media (max-width: 680px) { .blocks { grid-template-columns: 1fr; } }
     .block {
       border-radius: var(--r2); border: 1px solid rgba(255,255,255,.1);
@@ -225,7 +213,6 @@
     .bar.urgent > span, .bar.expired > span { background: linear-gradient(90deg, #ff3b4e, #ff5c6c); }
     .bar.missing > span { width: 25%; background: linear-gradient(90deg, rgba(255,255,255,.25), rgba(255,255,255,.1)); }
 
-    /* States */
     .empty, .loading, .error {
       padding: 28px 16px; border-radius: var(--r);
       border: 1px dashed rgba(255,255,255,.15);
@@ -238,27 +225,26 @@
       animation: spin .7s linear infinite; margin: 0 auto 12px;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
+    .btn {
+      padding: 10px 16px; border-radius: 12px; border: 1px solid rgba(255,255,255,.12);
+      background: rgba(61,155,133,.15); color: var(--text); font-weight: 700;
+      font-size: var(--fs1); cursor: pointer;
+    }
   </style>
 </head>
 <body>
   <div class="wrap">
     <div class="topbar">
       <div class="brand">
-        <div class="logoBox">ع</div>
+        <div class="logoBox">
+          <img src="logo.png" alt="Al Ajamy" onerror="this.style.display='none'; this.parentElement.textContent='ع';">
+        </div>
         <div class="title">
           <h1>Al Ajamy Food – سيارات التوزيع</h1>
           <div class="subtitle" id="subLine">جاري التحميل...</div>
         </div>
       </div>
       <div class="pill" id="countPill">— سيارة</div>
-    </div>
-
-    <div class="controls">
-      <div class="search-box">
-        <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.5 6.5 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 5 1.5-1.5-5-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-        <input type="search" id="searchInput" placeholder="ابحث برقم اللوحة أو النوع أو السائق أو التبعية..." autocomplete="off">
-      </div>
-      <button class="btn" id="refreshBtn" type="button">تحديث</button>
     </div>
 
     <div class="section">
@@ -275,8 +261,6 @@
   const grid = document.getElementById("grid");
   const subLine = document.getElementById("subLine");
   const countPill = document.getElementById("countPill");
-  const searchInput = document.getElementById("searchInput");
-  const refreshBtn = document.getElementById("refreshBtn");
 
   let allData = [];
 
@@ -290,14 +274,11 @@
     if (val == null || val === "") return null;
     const s = String(val).trim();
     if (!s) return null;
-
-    // DD/MM/YYYY or DD-MM-YYYY
     if (/^\d{1,2}[-\/]\d{1,2}[-\/]\d{4}$/.test(s)) {
       const parts = s.split(/[-\/]/).map(Number);
       const dt = new Date(parts[2], parts[1] - 1, parts[0]);
       return isNaN(dt.getTime()) ? null : dt;
     }
-    // YYYY-MM-DD
     if (/^\d{4}[-\/]\d{1,2}[-\/]\d{1,2}$/.test(s)) {
       const parts = s.split(/[-\/]/).map(Number);
       const dt = new Date(parts[0], parts[1] - 1, parts[2]);
@@ -367,8 +348,19 @@
       </div>`;
   }
 
+  function splitPlate(raw) {
+    const s = String(raw || "").trim();
+    if (!s) return { left: "—", right: "" };
+    const parts = s.split(/\s*\/\s*/);
+    if (parts.length >= 2) {
+      return { left: parts[0].trim() || "—", right: parts.slice(1).join(" ").trim() };
+    }
+    return { left: "", right: s };
+  }
+
   function cardHTML(row) {
-    const plate = String(row.plate || "—").trim();
+    const plateRaw = String(row.plate || "").trim();
+    const { left, right } = splitPlate(plateRaw);
     const vehicle = row.vehicle || "—";
     const branch = row.branch || "—";
     const driver = row.driver || "—";
@@ -381,30 +373,36 @@
            <svg class="phone-icon" viewBox="0 0 24 24"><path d="M6.62 10.79a15.1 15.1 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.22 11.36 11.36 0 003.57.57 1 1 0 011 1v3.5a1 1 0 01-1 1A18 18 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.36 11.36 0 00.57 3.57 1 1 0 01-.22 1.11l-2.2 2.2z"/></svg>
            ${escapeHtml(phone)}
          </a>`
-      : `<span style="opacity:.6">لا يوجد رقم</span>`;
+      : `<span style="opacity:.55">لا يوجد رقم</span>`;
+
+    const leftHtml = left
+      ? `<div class="left-num">${escapeHtml(left)}</div>`
+      : `<div class="left-num" style="min-width:12px;padding:0"></div>`;
 
     return `
       <div class="card">
         <div class="cardInner">
-          <div class="topRow">
-            <div class="meta">
-              <div class="metaTop">
-                <div class="vehicleName" title="${escapeHtml(vehicle)}">${escapeHtml(vehicle)}</div>
-                <div class="branchTag">${escapeHtml(branch)}</div>
-              </div>
-              <div class="metaLine">
-                <span>السائق: <b>${escapeHtml(driver)}</b></span>
-                ${phonePart}
-              </div>
-            </div>
-            <div class="plate" title="لوحة سورية">
+          <div class="metaRow">
+            <div class="vehicleName" title="${escapeHtml(vehicle)}">${escapeHtml(vehicle)}</div>
+            <div class="branchTag">${escapeHtml(branch)}</div>
+          </div>
+
+          <div class="plateWrap">
+            <div class="plate" title="لوحة سورية – ${escapeHtml(plateRaw)}">
+              ${leftHtml}
               <div class="flag-box">
                 <div class="ar">سوريا</div>
                 <div class="syr">SYR</div>
               </div>
-              <div class="num" dir="ltr">${escapeHtml(plate)}</div>
+              <div class="right-num">${escapeHtml(right || "—")}</div>
             </div>
           </div>
+
+          <div class="driverRow">
+            <span>السائق: <b>${escapeHtml(driver)}</b></span>
+            ${phonePart}
+          </div>
+
           <div class="blocks">
             ${blockHTML("المعاينة", inspDays)}
             ${blockHTML("الفحص الدوري", perDays)}
@@ -421,32 +419,16 @@
   }
 
   function render(data) {
-    const q = (searchInput.value || "").trim().toLowerCase();
-    let filtered = data;
-
-    if (q) {
-      filtered = data.filter(r =>
-        (r.plate || "").toLowerCase().includes(q) ||
-        (r.vehicle || "").toLowerCase().includes(q) ||
-        (r.branch || "").toLowerCase().includes(q) ||
-        (r.driver || "").toLowerCase().includes(q) ||
-        (r.phone || "").toLowerCase().includes(q)
-      );
-    }
-
-    countPill.textContent = filtered.length + " سيارة";
-
-    if (!filtered.length) {
-      grid.innerHTML = `<div class="empty">${q ? "لا توجد نتائج للبحث" : "لا توجد بيانات حالياً"}</div>`;
+    countPill.textContent = data.length + " سيارة";
+    if (!data.length) {
+      grid.innerHTML = `<div class="empty">لا توجد بيانات حالياً</div>`;
       return;
     }
-
-    const sorted = [...filtered].sort((a, b) => {
+    const sorted = [...data].sort((a, b) => {
       const aDue = minDue(daysRemaining(a.inspection_date), daysRemaining(a.periodic_date));
       const bDue = minDue(daysRemaining(b.inspection_date), daysRemaining(b.periodic_date));
       return aDue - bDue;
     });
-
     grid.innerHTML = sorted.map(cardHTML).join("");
   }
 
@@ -455,27 +437,15 @@
       const cb = "__cb_" + Date.now() + Math.random().toString(36).slice(2, 8);
       const script = document.createElement("script");
       const src = API_URL + (API_URL.includes("?") ? "&" : "?") + "callback=" + cb + "&_=" + Date.now();
-      const timeout = setTimeout(() => {
-        cleanup();
-        reject(new Error("انتهت مهلة الاتصال"));
-      }, 18000);
-
-      window[cb] = data => {
-        cleanup();
-        resolve(data);
-      };
-
+      const timeout = setTimeout(() => { cleanup(); reject(new Error("انتهت مهلة الاتصال")); }, 18000);
+      window[cb] = data => { cleanup(); resolve(data); };
       function cleanup() {
         clearTimeout(timeout);
         delete window[cb];
         if (script.parentNode) script.parentNode.removeChild(script);
       }
-
       script.src = src;
-      script.onerror = () => {
-        cleanup();
-        reject(new Error("فشل تحميل البيانات"));
-      };
+      script.onerror = () => { cleanup(); reject(new Error("فشل تحميل البيانات")); };
       document.head.appendChild(script);
     });
   }
@@ -483,12 +453,10 @@
   async function load(showLoading = true) {
     if (showLoading) {
       grid.innerHTML = `<div class="loading"><div class="spinner"></div>جاري تحميل البيانات...</div>`;
-      refreshBtn.disabled = true;
     }
     try {
       const res = await jsonpLoad();
       if (!res || res.ok !== true) throw new Error(res?.error || "استجابة غير صالحة");
-
       allData = Array.isArray(res.data) ? res.data : [];
       subLine.textContent = "آخر تحديث: " + new Date().toLocaleString("ar-SY", {
         day: "2-digit", month: "2-digit", year: "numeric",
@@ -504,13 +472,8 @@
         </div>`;
       countPill.textContent = "— سيارة";
       subLine.textContent = "آخر تحديث: —";
-    } finally {
-      refreshBtn.disabled = false;
     }
   }
-
-  searchInput.addEventListener("input", () => render(allData));
-  refreshBtn.addEventListener("click", () => load(true));
 
   load(true);
   setInterval(() => load(false), AUTO_REFRESH_MS);
