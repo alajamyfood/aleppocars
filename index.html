@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0d1214">
+  <title>Al Ajamy Food – متابعة سيارات التوزيع</title>
+  <style>
+    :root {
+      --bg: #0d1214;
+      --bg2: #090c0e;
+      --panel: #141a1c;
+      --text: #eef6f6;
+      --muted: #a8b8b7;
+      --brand: #3d9b85;
+      --brand2: #2a7a68;
+      --accent: #e07a1f;
+      --red: #ff3b4e;
+      --yellow: #ffcc00;
+      --amber: #ff8a24;
+      --green: #2dd36f;
+      --shadow: 0 12px 40px rgba(0,0,0,.4);
+      --r: 18px;
+      --r2: 14px;
+      --fs1: clamp(13px, 1.6vw, 14px);
+      --fs2: clamp(15px, 2.1vw, 17px);
+      --fs3: clamp(17px, 2.5vw, 20px);
+      --fsDays: clamp(28px, 4.5vw, 42px);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body {
+      color: var(--text);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Kufi Arabic", "Noto Sans Arabic", sans-serif;
+      background:
+        radial-gradient(900px 600px at 90% -10%, rgba(61,155,133,.15), transparent 55%),
+        radial-gradient(800px 500px at 5% 5%, rgba(224,122,31,.1), transparent 50%),
+        linear-gradient(180deg, var(--bg), var(--bg2));
+      overflow-x: hidden;
+    }
+    .wrap { max-width: 1200px; margin: 0 auto; padding: 16px 12px 36px; }
+
+    /* Topbar */
+    .topbar {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      padding: 12px 14px; border-radius: var(--r);
+      border: 1px solid rgba(255,255,255,.1);
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      box-shadow: var(--shadow);
+      position: sticky; top: 8px; z-index: 20;
+      backdrop-filter: blur(12px);
+    }
+    .brand { display: flex; align-items: center; gap: 12px; min-width: 0; flex: 1; }
+    .logoBox {
+      width: 52px; height: 52px; border-radius: 14px; overflow: hidden;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.25); flex: 0 0 auto;
+      display: grid; place-items: center; font-weight: 900; font-size: 18px; color: var(--brand);
+    }
+    .title h1 { margin: 0; font-size: var(--fs3); font-weight: 900; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .subtitle { margin-top: 2px; color: var(--muted); font-size: var(--fs1); }
+    .pill {
+      flex: 0 0 auto; padding: 7px 12px; border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12); background: rgba(0,0,0,.25);
+      color: var(--muted); font-weight: 800; font-size: var(--fs1);
+    }
+
+    /* Controls */
+    .controls {
+      margin-top: 14px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
+    }
+    .search-box {
+      flex: 1; min-width: 200px; position: relative;
+    }
+    .search-box input {
+      width: 100%; padding: 11px 14px 11px 40px; border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.12); background: rgba(0,0,0,.3);
+      color: var(--text); font-size: var(--fs1); outline: none;
+    }
+    .search-box input:focus { border-color: var(--brand); }
+    .search-box svg {
+      position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+      width: 18px; height: 18px; fill: var(--muted); pointer-events: none;
+    }
+    .btn {
+      padding: 10px 16px; border-radius: 12px; border: 1px solid rgba(255,255,255,.12);
+      background: rgba(61,155,133,.15); color: var(--text); font-weight: 700;
+      font-size: var(--fs1); cursor: pointer; transition: .15s;
+    }
+    .btn:hover { background: rgba(61,155,133,.28); }
+    .btn:disabled { opacity: .5; cursor: not-allowed; }
+
+    /* Grid */
+    .section { margin-top: 14px; padding: 12px; border-radius: var(--r); border: 1px solid rgba(255,255,255,.07); background: rgba(255,255,255,.02); }
+    .grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; }
+    @media (max-width: 1050px) { .grid { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+    @media (max-width: 680px) {
+      .grid { grid-template-columns: 1fr; }
+      .topbar { position: static; }
+    }
+
+    /* Card */
+    .card {
+      border-radius: var(--r); border: 1.5px solid rgba(255,255,255,.14);
+      background: linear-gradient(180deg, rgba(255,255,255,.035), rgba(0,0,0,.12));
+      box-shadow: var(--shadow); overflow: hidden; position: relative;
+    }
+    .cardInner { padding: 12px; }
+    .topRow { display: flex; align-items: stretch; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+    .meta { flex: 1; min-width: 180px; border-radius: var(--r2); border: 1px solid rgba(255,255,255,.1); background: rgba(0,0,0,.22); padding: 10px; }
+    .metaTop { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+    .vehicleName { font-size: var(--fs2); font-weight: 900; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .branchTag {
+      font-size: 12px; font-weight: 800; padding: 4px 9px; border-radius: 999px;
+      border: 1px solid rgba(61,155,133,.3); background: rgba(61,155,133,.12);
+    }
+    .metaLine { margin-top: 8px; font-size: var(--fs1); color: var(--muted); }
+
+    /* Syrian modern plate */
+    .plate {
+      direction: ltr; unicode-bidi: embed;
+      display: flex; align-items: stretch;
+      border-radius: 8px; overflow: hidden;
+      border: 3px solid #222; background: #fff;
+      box-shadow: 0 3px 10px rgba(0,0,0,.35);
+      min-width: 210px; max-width: 320px; flex: 0 0 auto;
+      font-weight: 900;
+    }
+    .plate .flag-box {
+      width: 58px; background: linear-gradient(to bottom, #007A3D 0 33.33%, #FFFFFF 33.33% 66.66%, #000000 66.66% 100%);
+      color: #111; display: flex; flex-direction: column; align-items: center; justify-content: center;
+      position: relative; border-right: 2px solid #444; flex-shrink: 0;
+    }
+    .plate .flag-box .ar { font-size: 9px; font-weight: 900; line-height: 1.1; margin-bottom: 2px; }
+    .plate .flag-box .syr { font-size: 11px; font-weight: 900; letter-spacing: 0.5px; background: rgba(255,255,255,.85); padding: 1px 3px; border-radius: 2px; }
+    .plate .num {
+      flex: 1; background: #fff; color: #000; padding: 6px 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; font-family: "Courier New", Courier, monospace;
+      letter-spacing: 1.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    @media (max-width: 680px) {
+      .plate { min-width: 180px; max-width: 100%; }
+      .plate .flag-box { width: 50px; }
+      .plate .num { font-size: 16px; }
+    }
+
+    /* Blocks */
+    .blocks { margin-top: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    @media (max-width: 680px) { .blocks { grid-template-columns: 1fr; } }
+    .block { border-radius: var(--r2); border: 1px solid rgba(255,255,255,.1); background: rgba(0,0,0,.22); padding: 10px; }
+    .blockTop { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+    .blockTitle { font-size: var(--fs2); font-weight: 900; }
+    .badge {
+      display: inline-flex; align-items: center; gap: 5px; padding: 5px 8px;
+      border-radius: 999px; border: 1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.2); font-weight: 800; font-size: 12px; white-space: nowrap;
+    }
+    .badge svg { width: 14px; height: 14px; flex: 0 0 auto; }
+    .badge.urgent, .badge.expired { border-color: rgba(255,59,78,.4); }
+    .badge.alert { border-color: rgba(255,204,0,.4); }
+    .badge.follow { border-color: rgba(224,122,31,.4); }
+    .badge.safe, .badge.long { border-color: rgba(45,211,111,.35); }
+    .badge.missing { border-color: rgba(255,255,255,.2); color: rgba(234,242,242,.85); }
+
+    .days { margin-top: 8px; display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+    .daysNum { font-size: var(--fsDays); font-weight: 900; line-height: 1; }
+    .daysTxt { font-size: var(--fs2); font-weight: 800; color: rgba(234,242,242,.9); }
+    .daysMissing { margin-top: 8px; font-size: var(--fs2); font-weight: 800; color: rgba(234,242,242,.8); }
+
+    .bar { margin-top: 8px; height: 9px; border-radius: 999px; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.08); overflow: hidden; }
+    .bar > span { display: block; height: 100%; border-radius: 999px; transition: width .4s ease; }
+    .bar.safe > span, .bar.long > span { background: linear-gradient(90deg, #3d9b85, #2dd36f); }
+    .bar.follow > span { background: linear-gradient(90deg, #e07a1f, #ff8a24); }
+    .bar.alert > span { background: linear-gradient(90deg, #ffcc00, #e07a1f); }
+    .bar.urgent > span, .bar.expired > span { background: linear-gradient(90deg, #ff3b4e, #ff5c6c); }
+    .bar.missing > span { width: 25%; background: linear-gradient(90deg, rgba(255,255,255,.25), rgba(255,255,255,.1)); }
+
+    .empty, .loading, .error {
+      padding: 28px 16px; border-radius: var(--r); border: 1px dashed rgba(255,255,255,.15);
+      background: rgba(0,0,0,.2); color: var(--muted); font-weight: 800; text-align: center;
+    }
+    .error { border-color: rgba(255,59,78,.3); color: #ff8a95; }
+    .spinner {
+      width: 28px; height: 28px; border: 3px solid rgba(255,255,255,.15);
+      border-top-color: var(--brand); border-radius: 50%;
+      animation: spin .7s linear infinite; margin: 0 auto 12px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <div class="logoBox">ع</div>
+        <div class="title">
+          <h1>Al Ajamy Food – سيارات التوزيع</h1>
+          <div class="subtitle" id="subLine">جاري التحميل...</div>
+        </div>
+      </div>
+      <div class="pill" id="countPill">— سيارة</div>
+    </div>
+
+    <div class="controls">
+      <div class="search-box">
+        <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.5 6.5 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 5 1.5-1.5-5-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+        <input type="search" id="searchInput" placeholder="ابحث برقم اللوحة أو النوع أو التبعية..." autocomplete="off">
+      </div>
+      <button class="btn" id="refreshBtn" type="button">تحديث</button>
+    </div>
+
+    <div class="section">
+      <div class="grid" id="grid">
+        <div class="loading"><div class="spinner"></div>جاري تحميل البيانات...</div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  // ←←← ضع رابط الـ Apps Script هنا
+  const API_URL = "https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec";
+
+  const AUTO_REFRESH_MS = 60000;
+  const grid = document.getElementById("grid");
+  const subLine = document.getElementById("subLine");
+  const countPill = document.getElementById("countPill");
+  const searchInput = document.getElementById("searchInput");
+  const refreshBtn = document.getElementById("refreshBtn");
+
+  let allData = [];
+
+  function escapeHtml(s) {
+    return String(s ?? "").replace(/[&<>"']/g, m => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+    }[m]));
+  }
+
+  function parseAnyDate(val) {
+    if (val == null || val === "") return null;
+    const s = String(val).trim();
+    if (!s) return null;
+    // DD/MM/YYYY or DD-MM-YYYY
+    if (/^\d{1,2}[-\/]\d{1,2}[-\/]\d{4}$/.test(s)) {
+      const [d, m, y] = s.split(/[-\/]/).map(Number);
+      const dt = new Date(y, m - 1, d);
+      return isNaN(dt.getTime()) ? null : dt;
+    }
+    // YYYY-MM-DD
+    if (/^\d{4}[-\/]\d{1,2}[-\/]\d{1,2}$/.test(s)) {
+      const [y, m, d] = s.split(/[-\/]/).map(Number);
+      const dt = new Date(y, m - 1, d);
+      return isNaN(dt.getTime()) ? null : dt;
+    }
+    const fallback = new Date(s);
+    return isNaN(fallback.getTime()) ? null : fallback;
+  }
+
+  function daysRemaining(dateVal) {
+    const dt = parseAnyDate(dateVal);
+    if (!dt) return null;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const x = new Date(dt);
+    x.setHours(0, 0, 0, 0);
+    return Math.round((x - today) / 86400000);
+  }
+
+  function statusForDays(d) {
+    if (d === null) return { type: "missing", label: "غير محدد" };
+    if (d < 0) return { type: "expired", label: "منتهية" };
+    if (d <= 15) return { type: "urgent", label: "عاجل" };
+    if (d <= 30) return { type: "alert", label: "تنبيه" };
+    if (d <= 60) return { type: "follow", label: "متابعة" };
+    if (d <= 120) return { type: "safe", label: "المدة آمنة" };
+    return { type: "long", label: "مدة طويلة" };
+  }
+
+  function barWidth(d) {
+    if (d === null) return 25;
+    if (d < 0) return 100;
+    return Math.min(100, Math.max(4, Math.round(d / 200 * 100)));
+  }
+
+  function svgDot(color) {
+    return `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="${color}"/></svg>`;
+  }
+  function badgeIcon(type) {
+    if (type === "alert") return `<svg viewBox="0 0 24 24"><path fill="#ffcc00" d="M12 3 1 21h22L12 3z"/><path fill="#111" d="M11 9h2v6h-2z"/><circle cx="12" cy="18" r="1.2" fill="#111"/></svg>`;
+    if (type === "urgent" || type === "expired") return `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#ff3b4e"/><path fill="#fff" d="M11 7h2v8h-2z"/><circle cx="12" cy="17.6" r="1.2" fill="#fff"/></svg>`;
+    if (type === "follow") return svgDot("#ff8a24");
+    if (type === "missing") return svgDot("rgba(255,255,255,.35)");
+    return svgDot("#2dd36f");
+  }
+
+  function blockHTML(title, days) {
+    const st = statusForDays(days);
+    const w = barWidth(days);
+    const shown = days === null ? null : (days < 0 ? 0 : days);
+    const daysPart = shown === null
+      ? `<div class="daysMissing">غير محدد</div>`
+      : `<div class="days"><div class="daysNum">${shown}</div><div class="daysTxt">يوم متبقي</div></div>`;
+    return `
+      <div class="block">
+        <div class="blockTop">
+          <div class="blockTitle">${title}</div>
+          <div class="badge ${st.type}">${badgeIcon(st.type)}<span>${st.label}</span></div>
+        </div>
+        ${daysPart}
+        <div class="bar ${st.type}"><span style="width:${w}%"></span></div>
+      </div>`;
+  }
+
+  function cardHTML(row) {
+    const plate = String(row.plate || "—").trim();
+    const vehicle = row.vehicle || "—";
+    const branch = row.branch || "—";
+    const inspDays = daysRemaining(row.inspection_date);
+    const perDays = daysRemaining(row.periodic_date);
+
+    return `
+      <div class="card">
+        <div class="cardInner">
+          <div class="topRow">
+            <div class="meta">
+              <div class="metaTop">
+                <div class="vehicleName" title="${escapeHtml(vehicle)}">${escapeHtml(vehicle)}</div>
+                <div class="branchTag">${escapeHtml(branch)}</div>
+              </div>
+              <div class="metaLine">رقم اللوحة: <b dir="ltr">${escapeHtml(plate)}</b></div>
+            </div>
+            <div class="plate" title="لوحة سورية">
+              <div class="flag-box">
+                <div class="ar">سوريا</div>
+                <div class="syr">SYR</div>
+              </div>
+              <div class="num" dir="ltr">${escapeHtml(plate)}</div>
+            </div>
+          </div>
+          <div class="blocks">
+            ${blockHTML("المعاينة", inspDays)}
+            ${blockHTML("الفحص الدوري", perDays)}
+          </div>
+        </div>
+      </div>`;
+  }
+
+  function minDue(d1, d2) {
+    const arr = [d1, d2].filter(v => v !== null);
+    if (!arr.length) return 999999;
+    if (arr.some(v => v < 0)) return -999999;
+    return Math.min(...arr);
+  }
+
+  function render(data) {
+    const q = (searchInput.value || "").trim().toLowerCase();
+    let filtered = data;
+    if (q) {
+      filtered = data.filter(r =>
+        (r.plate || "").toLowerCase().includes(q) ||
+        (r.vehicle || "").toLowerCase().includes(q) ||
+        (r.branch || "").toLowerCase().includes(q)
+      );
+    }
+
+    countPill.textContent = filtered.length + " سيارة";
+
+    if (!filtered.length) {
+      grid.innerHTML = `<div class="empty">${q ? "لا توجد نتائج للبحث" : "لا توجد بيانات حالياً"}</div>`;
+      return;
+    }
+
+    const sorted = [...filtered].sort((a, b) => {
+      const aDue = minDue(daysRemaining(a.inspection_date), daysRemaining(a.periodic_date));
+      const bDue = minDue(daysRemaining(b.inspection_date), daysRemaining(b.periodic_date));
+      return aDue - bDue;
+    });
+
+    grid.innerHTML = sorted.map(cardHTML).join("");
+  }
+
+  function jsonpLoad() {
+    return new Promise((resolve, reject) => {
+      const cb = "__cb_" + Date.now() + Math.random().toString(36).slice(2, 8);
+      const script = document.createElement("script");
+      const src = API_URL + (API_URL.includes("?") ? "&" : "?") + "callback=" + cb + "&_=" + Date.now();
+      const timeout = setTimeout(() => { cleanup(); reject(new Error("انتهت مهلة الاتصال")); }, 18000);
+
+      window[cb] = data => { cleanup(); resolve(data); };
+
+      function cleanup() {
+        clearTimeout(timeout);
+        delete window[cb];
+        if (script.parentNode) script.parentNode.removeChild(script);
+      }
+
+      script.src = src;
+      script.onerror = () => { cleanup(); reject(new Error("فشل تحميل البيانات")); };
+      document.head.appendChild(script);
+    });
+  }
+
+  async function load(showLoading = true) {
+    if (showLoading) {
+      grid.innerHTML = `<div class="loading"><div class="spinner"></div>جاري تحميل البيانات...</div>`;
+      refreshBtn.disabled = true;
+    }
+    try {
+      const res = await jsonpLoad();
+      if (!res || res.ok !== true) throw new Error(res?.error || "استجابة غير صالحة");
+
+      allData = Array.isArray(res.data) ? res.data : [];
+      subLine.textContent = "آخر تحديث: " + new Date().toLocaleString("ar-SY", {
+        day: "2-digit", month: "2-digit", year: "numeric",
+        hour: "2-digit", minute: "2-digit"
+      });
+      render(allData);
+    } catch (err) {
+      grid.innerHTML = `
+        <div class="error">
+          تعذر تحميل البيانات<br>
+          <small style="opacity:.8">${escapeHtml(err.message || err)}</small><br><br>
+          <button class="btn" onclick="load(true)">إعادة المحاولة</button>
+        </div>`;
+      countPill.textContent = "— سيارة";
+      subLine.textContent = "آخر تحديث: —";
+    } finally {
+      refreshBtn.disabled = false;
+    }
+  }
+
+  searchInput.addEventListener("input", () => render(allData));
+  refreshBtn.addEventListener("click", () => load(true));
+
+  load(true);
+  setInterval(() => load(false), AUTO_REFRESH_MS);
+</script>
+</body>
+</html>
