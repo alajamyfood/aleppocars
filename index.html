@@ -4,7 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#0d1214">
-  <title>Al Ajamy Food – متابعة سيارات التوزيع</title>
+  <meta name="description" content="Al Ajamy Food – متابعة سيارات التوزيع في سوريا">
+  <title>Al Ajamy Food – سيارات التوزيع</title>
   <style>
     :root {
       --bg: #0d1214;
@@ -55,29 +56,32 @@
       width: 52px; height: 52px; border-radius: 14px; overflow: hidden;
       border: 1px solid rgba(255,255,255,.12);
       background: rgba(0,0,0,.25); flex: 0 0 auto;
-      display: grid; place-items: center; font-weight: 900; font-size: 18px; color: var(--brand);
+      display: grid; place-items: center; font-weight: 900; font-size: 20px; color: var(--brand);
     }
-    .title h1 { margin: 0; font-size: var(--fs3); font-weight: 900; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .title h1 {
+      margin: 0; font-size: var(--fs3); font-weight: 900;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
     .subtitle { margin-top: 2px; color: var(--muted); font-size: var(--fs1); }
     .pill {
       flex: 0 0 auto; padding: 7px 12px; border-radius: 999px;
       border: 1px solid rgba(255,255,255,.12); background: rgba(0,0,0,.25);
-      color: var(--muted); font-weight: 800; font-size: var(--fs1);
+      color: var(--muted); font-weight: 800; font-size: var(--fs1); white-space: nowrap;
     }
 
     /* Controls */
     .controls {
       margin-top: 14px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
     }
-    .search-box {
-      flex: 1; min-width: 200px; position: relative;
-    }
+    .search-box { flex: 1; min-width: 200px; position: relative; }
     .search-box input {
       width: 100%; padding: 11px 14px 11px 40px; border-radius: 12px;
       border: 1px solid rgba(255,255,255,.12); background: rgba(0,0,0,.3);
       color: var(--text); font-size: var(--fs1); outline: none;
+      transition: border-color .15s;
     }
     .search-box input:focus { border-color: var(--brand); }
+    .search-box input::placeholder { color: rgba(168,184,183,.7); }
     .search-box svg {
       position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
       width: 18px; height: 18px; fill: var(--muted); pointer-events: none;
@@ -85,13 +89,16 @@
     .btn {
       padding: 10px 16px; border-radius: 12px; border: 1px solid rgba(255,255,255,.12);
       background: rgba(61,155,133,.15); color: var(--text); font-weight: 700;
-      font-size: var(--fs1); cursor: pointer; transition: .15s;
+      font-size: var(--fs1); cursor: pointer; transition: .15s; white-space: nowrap;
     }
     .btn:hover { background: rgba(61,155,133,.28); }
     .btn:disabled { opacity: .5; cursor: not-allowed; }
 
     /* Grid */
-    .section { margin-top: 14px; padding: 12px; border-radius: var(--r); border: 1px solid rgba(255,255,255,.07); background: rgba(255,255,255,.02); }
+    .section {
+      margin-top: 14px; padding: 12px; border-radius: var(--r);
+      border: 1px solid rgba(255,255,255,.07); background: rgba(255,255,255,.02);
+    }
     .grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; }
     @media (max-width: 1050px) { .grid { grid-template-columns: repeat(2, minmax(0,1fr)); } }
     @media (max-width: 680px) {
@@ -106,15 +113,40 @@
       box-shadow: var(--shadow); overflow: hidden; position: relative;
     }
     .cardInner { padding: 12px; }
-    .topRow { display: flex; align-items: stretch; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
-    .meta { flex: 1; min-width: 180px; border-radius: var(--r2); border: 1px solid rgba(255,255,255,.1); background: rgba(0,0,0,.22); padding: 10px; }
-    .metaTop { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
-    .vehicleName { font-size: var(--fs2); font-weight: 900; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .topRow {
+      display: flex; align-items: stretch; justify-content: space-between;
+      gap: 10px; flex-wrap: wrap;
+    }
+    .meta {
+      flex: 1; min-width: 180px; border-radius: var(--r2);
+      border: 1px solid rgba(255,255,255,.1); background: rgba(0,0,0,.22); padding: 10px;
+    }
+    .metaTop {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 8px; flex-wrap: wrap;
+    }
+    .vehicleName {
+      font-size: var(--fs2); font-weight: 900;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;
+    }
     .branchTag {
       font-size: 12px; font-weight: 800; padding: 4px 9px; border-radius: 999px;
       border: 1px solid rgba(61,155,133,.3); background: rgba(61,155,133,.12);
+      white-space: nowrap;
     }
-    .metaLine { margin-top: 8px; font-size: var(--fs1); color: var(--muted); }
+    .metaLine {
+      margin-top: 8px; font-size: var(--fs1); color: var(--muted);
+      display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+    }
+    .metaLine b { color: var(--text); font-weight: 800; }
+
+    /* Phone link */
+    .phone-link {
+      display: inline-flex; align-items: center; gap: 5px;
+      color: var(--text); text-decoration: none; transition: color .15s;
+    }
+    .phone-link:hover { color: var(--brand); }
+    .phone-icon { width: 15px; height: 15px; fill: currentColor; flex: 0 0 auto; }
 
     /* Syrian modern plate */
     .plate {
@@ -127,29 +159,43 @@
       font-weight: 900;
     }
     .plate .flag-box {
-      width: 58px; background: linear-gradient(to bottom, #007A3D 0 33.33%, #FFFFFF 33.33% 66.66%, #000000 66.66% 100%);
-      color: #111; display: flex; flex-direction: column; align-items: center; justify-content: center;
+      width: 58px;
+      background: linear-gradient(to bottom, #007A3D 0 33.33%, #FFFFFF 33.33% 66.66%, #000000 66.66% 100%);
+      color: #111; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
       position: relative; border-right: 2px solid #444; flex-shrink: 0;
     }
-    .plate .flag-box .ar { font-size: 9px; font-weight: 900; line-height: 1.1; margin-bottom: 2px; }
-    .plate .flag-box .syr { font-size: 11px; font-weight: 900; letter-spacing: 0.5px; background: rgba(255,255,255,.85); padding: 1px 3px; border-radius: 2px; }
+    .plate .flag-box .ar {
+      font-size: 9px; font-weight: 900; line-height: 1.1; margin-bottom: 2px;
+      text-shadow: 0 0 1px rgba(255,255,255,.8);
+    }
+    .plate .flag-box .syr {
+      font-size: 11px; font-weight: 900; letter-spacing: 0.5px;
+      background: rgba(255,255,255,.9); padding: 1px 3px; border-radius: 2px;
+    }
     .plate .num {
       flex: 1; background: #fff; color: #000; padding: 6px 10px;
       display: flex; align-items: center; justify-content: center;
-      font-size: 18px; font-family: "Courier New", Courier, monospace;
-      letter-spacing: 1.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      font-size: 17px; font-family: "Courier New", Courier, monospace;
+      letter-spacing: 1.2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
     @media (max-width: 680px) {
       .plate { min-width: 180px; max-width: 100%; }
       .plate .flag-box { width: 50px; }
-      .plate .num { font-size: 16px; }
+      .plate .num { font-size: 15px; letter-spacing: 1px; }
     }
 
     /* Blocks */
     .blocks { margin-top: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     @media (max-width: 680px) { .blocks { grid-template-columns: 1fr; } }
-    .block { border-radius: var(--r2); border: 1px solid rgba(255,255,255,.1); background: rgba(0,0,0,.22); padding: 10px; }
-    .blockTop { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+    .block {
+      border-radius: var(--r2); border: 1px solid rgba(255,255,255,.1);
+      background: rgba(0,0,0,.22); padding: 10px;
+    }
+    .blockTop {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 8px; flex-wrap: wrap;
+    }
     .blockTitle { font-size: var(--fs2); font-weight: 900; }
     .badge {
       display: inline-flex; align-items: center; gap: 5px; padding: 5px 8px;
@@ -168,7 +214,10 @@
     .daysTxt { font-size: var(--fs2); font-weight: 800; color: rgba(234,242,242,.9); }
     .daysMissing { margin-top: 8px; font-size: var(--fs2); font-weight: 800; color: rgba(234,242,242,.8); }
 
-    .bar { margin-top: 8px; height: 9px; border-radius: 999px; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.08); overflow: hidden; }
+    .bar {
+      margin-top: 8px; height: 9px; border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.08); overflow: hidden;
+    }
     .bar > span { display: block; height: 100%; border-radius: 999px; transition: width .4s ease; }
     .bar.safe > span, .bar.long > span { background: linear-gradient(90deg, #3d9b85, #2dd36f); }
     .bar.follow > span { background: linear-gradient(90deg, #e07a1f, #ff8a24); }
@@ -176,8 +225,10 @@
     .bar.urgent > span, .bar.expired > span { background: linear-gradient(90deg, #ff3b4e, #ff5c6c); }
     .bar.missing > span { width: 25%; background: linear-gradient(90deg, rgba(255,255,255,.25), rgba(255,255,255,.1)); }
 
+    /* States */
     .empty, .loading, .error {
-      padding: 28px 16px; border-radius: var(--r); border: 1px dashed rgba(255,255,255,.15);
+      padding: 28px 16px; border-radius: var(--r);
+      border: 1px dashed rgba(255,255,255,.15);
       background: rgba(0,0,0,.2); color: var(--muted); font-weight: 800; text-align: center;
     }
     .error { border-color: rgba(255,59,78,.3); color: #ff8a95; }
@@ -205,7 +256,7 @@
     <div class="controls">
       <div class="search-box">
         <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.5 6.5 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 5 1.5-1.5-5-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-        <input type="search" id="searchInput" placeholder="ابحث برقم اللوحة أو النوع أو التبعية..." autocomplete="off">
+        <input type="search" id="searchInput" placeholder="ابحث برقم اللوحة أو النوع أو السائق أو التبعية..." autocomplete="off">
       </div>
       <button class="btn" id="refreshBtn" type="button">تحديث</button>
     </div>
@@ -218,10 +269,9 @@
   </div>
 
 <script>
-  // ←←← ضع رابط الـ Apps Script هنا
-  const API_URL = "https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec";
-
+  const API_URL = "https://script.google.com/macros/s/AKfycbwMa3xvwodCJ8ELoETkcqIMMcW6OjGw7ipazpKOK4j1BpZuVJiNZo2G72YLbAvtfbpP/exec";
   const AUTO_REFRESH_MS = 60000;
+
   const grid = document.getElementById("grid");
   const subLine = document.getElementById("subLine");
   const countPill = document.getElementById("countPill");
@@ -240,16 +290,17 @@
     if (val == null || val === "") return null;
     const s = String(val).trim();
     if (!s) return null;
+
     // DD/MM/YYYY or DD-MM-YYYY
     if (/^\d{1,2}[-\/]\d{1,2}[-\/]\d{4}$/.test(s)) {
-      const [d, m, y] = s.split(/[-\/]/).map(Number);
-      const dt = new Date(y, m - 1, d);
+      const parts = s.split(/[-\/]/).map(Number);
+      const dt = new Date(parts[2], parts[1] - 1, parts[0]);
       return isNaN(dt.getTime()) ? null : dt;
     }
     // YYYY-MM-DD
     if (/^\d{4}[-\/]\d{1,2}[-\/]\d{1,2}$/.test(s)) {
-      const [y, m, d] = s.split(/[-\/]/).map(Number);
-      const dt = new Date(y, m - 1, d);
+      const parts = s.split(/[-\/]/).map(Number);
+      const dt = new Date(parts[0], parts[1] - 1, parts[2]);
       return isNaN(dt.getTime()) ? null : dt;
     }
     const fallback = new Date(s);
@@ -285,9 +336,14 @@
   function svgDot(color) {
     return `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="${color}"/></svg>`;
   }
+
   function badgeIcon(type) {
-    if (type === "alert") return `<svg viewBox="0 0 24 24"><path fill="#ffcc00" d="M12 3 1 21h22L12 3z"/><path fill="#111" d="M11 9h2v6h-2z"/><circle cx="12" cy="18" r="1.2" fill="#111"/></svg>`;
-    if (type === "urgent" || type === "expired") return `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#ff3b4e"/><path fill="#fff" d="M11 7h2v8h-2z"/><circle cx="12" cy="17.6" r="1.2" fill="#fff"/></svg>`;
+    if (type === "alert") {
+      return `<svg viewBox="0 0 24 24"><path fill="#ffcc00" d="M12 3 1 21h22L12 3z"/><path fill="#111" d="M11 9h2v6h-2z"/><circle cx="12" cy="18" r="1.2" fill="#111"/></svg>`;
+    }
+    if (type === "urgent" || type === "expired") {
+      return `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#ff3b4e"/><path fill="#fff" d="M11 7h2v8h-2z"/><circle cx="12" cy="17.6" r="1.2" fill="#fff"/></svg>`;
+    }
     if (type === "follow") return svgDot("#ff8a24");
     if (type === "missing") return svgDot("rgba(255,255,255,.35)");
     return svgDot("#2dd36f");
@@ -315,8 +371,17 @@
     const plate = String(row.plate || "—").trim();
     const vehicle = row.vehicle || "—";
     const branch = row.branch || "—";
+    const driver = row.driver || "—";
+    const phone = String(row.phone || "").trim();
     const inspDays = daysRemaining(row.inspection_date);
     const perDays = daysRemaining(row.periodic_date);
+
+    const phonePart = phone
+      ? `<a href="tel:${phone.replace(/\D/g, '')}" class="phone-link" dir="ltr">
+           <svg class="phone-icon" viewBox="0 0 24 24"><path d="M6.62 10.79a15.1 15.1 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.22 11.36 11.36 0 003.57.57 1 1 0 011 1v3.5a1 1 0 01-1 1A18 18 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.36 11.36 0 00.57 3.57 1 1 0 01-.22 1.11l-2.2 2.2z"/></svg>
+           ${escapeHtml(phone)}
+         </a>`
+      : `<span style="opacity:.6">لا يوجد رقم</span>`;
 
     return `
       <div class="card">
@@ -327,7 +392,10 @@
                 <div class="vehicleName" title="${escapeHtml(vehicle)}">${escapeHtml(vehicle)}</div>
                 <div class="branchTag">${escapeHtml(branch)}</div>
               </div>
-              <div class="metaLine">رقم اللوحة: <b dir="ltr">${escapeHtml(plate)}</b></div>
+              <div class="metaLine">
+                <span>السائق: <b>${escapeHtml(driver)}</b></span>
+                ${phonePart}
+              </div>
             </div>
             <div class="plate" title="لوحة سورية">
               <div class="flag-box">
@@ -355,11 +423,14 @@
   function render(data) {
     const q = (searchInput.value || "").trim().toLowerCase();
     let filtered = data;
+
     if (q) {
       filtered = data.filter(r =>
         (r.plate || "").toLowerCase().includes(q) ||
         (r.vehicle || "").toLowerCase().includes(q) ||
-        (r.branch || "").toLowerCase().includes(q)
+        (r.branch || "").toLowerCase().includes(q) ||
+        (r.driver || "").toLowerCase().includes(q) ||
+        (r.phone || "").toLowerCase().includes(q)
       );
     }
 
@@ -384,9 +455,15 @@
       const cb = "__cb_" + Date.now() + Math.random().toString(36).slice(2, 8);
       const script = document.createElement("script");
       const src = API_URL + (API_URL.includes("?") ? "&" : "?") + "callback=" + cb + "&_=" + Date.now();
-      const timeout = setTimeout(() => { cleanup(); reject(new Error("انتهت مهلة الاتصال")); }, 18000);
+      const timeout = setTimeout(() => {
+        cleanup();
+        reject(new Error("انتهت مهلة الاتصال"));
+      }, 18000);
 
-      window[cb] = data => { cleanup(); resolve(data); };
+      window[cb] = data => {
+        cleanup();
+        resolve(data);
+      };
 
       function cleanup() {
         clearTimeout(timeout);
@@ -395,7 +472,10 @@
       }
 
       script.src = src;
-      script.onerror = () => { cleanup(); reject(new Error("فشل تحميل البيانات")); };
+      script.onerror = () => {
+        cleanup();
+        reject(new Error("فشل تحميل البيانات"));
+      };
       document.head.appendChild(script);
     });
   }
@@ -419,8 +499,8 @@
       grid.innerHTML = `
         <div class="error">
           تعذر تحميل البيانات<br>
-          <small style="opacity:.8">${escapeHtml(err.message || err)}</small><br><br>
-          <button class="btn" onclick="load(true)">إعادة المحاولة</button>
+          <small style="opacity:.8">${escapeHtml(err.message || String(err))}</small><br><br>
+          <button class="btn" type="button" onclick="load(true)">إعادة المحاولة</button>
         </div>`;
       countPill.textContent = "— سيارة";
       subLine.textContent = "آخر تحديث: —";
