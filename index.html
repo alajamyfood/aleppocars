@@ -114,33 +114,31 @@
     .phone-link:hover { color: var(--brand); }
     .phone-icon { width: 15px; height: 15px; fill: currentColor; flex: 0 0 auto; }
 
-    /* Syrian official plate – exact modern style */
+    /* Syrian official plate – balanced & elegant */
     .plateWrap {
       display: flex; justify-content: center; width: 100%;
-      padding: 2px 0;
+      padding: 4px 0;
     }
     .plate {
       direction: ltr; unicode-bidi: embed;
-      display: flex; align-items: stretch;
-      border-radius: 10px;
+      display: inline-flex; align-items: stretch;
+      border-radius: 8px;
       background: #fff;
-      border: 2.5px solid #2a2a2a;
+      border: 2px solid #222;
       box-shadow:
-        0 0 0 1.5px #c8c8c8,
-        0 4px 14px rgba(0,0,0,.45),
-        inset 0 1px 0 rgba(255,255,255,.7);
-      min-width: 260px; max-width: 360px; width: 100%;
-      height: 62px;
+        0 0 0 1px #b0b0b0,
+        0 3px 12px rgba(0,0,0,.4),
+        inset 0 1px 0 rgba(255,255,255,.75);
+      height: 54px;
       overflow: hidden;
       position: relative;
     }
-    /* subtle security border effect */
     .plate::before {
       content: "";
       position: absolute; inset: 0;
-      border-radius: 8px;
+      border-radius: 6px;
       pointer-events: none;
-      box-shadow: inset 0 0 0 1px rgba(180,180,180,.35);
+      box-shadow: inset 0 0 0 1px rgba(160,160,160,.3);
     }
     .plate .left-num,
     .plate .right-num {
@@ -149,76 +147,71 @@
       font-family: Arial Black, "Arial Black", Impact, "Helvetica Neue", Arial, sans-serif;
       font-weight: 900;
       white-space: nowrap;
-      letter-spacing: 1px;
       line-height: 1;
     }
     .plate .left-num {
-      min-width: 58px;
-      font-size: 28px;
-      padding: 0 6px 0 10px;
+      font-size: 24px;
+      padding: 0 10px 0 12px;
+      letter-spacing: 0.5px;
     }
     .plate .right-num {
-      flex: 1;
-      font-size: 28px;
-      padding: 0 12px 0 8px;
-      letter-spacing: 3px;
-      justify-content: flex-start;
+      font-size: 24px;
+      padding: 0 14px 0 10px;
+      letter-spacing: 2.5px;
     }
     .plate .flag-box {
-      width: 52px; flex-shrink: 0;
+      width: 46px; flex-shrink: 0;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
-      gap: 2px;
-      padding: 3px 2px;
+      gap: 1.5px;
+      padding: 2px 0;
       background: #fff;
     }
     .plate .flag-box .ar {
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 900;
       color: #111;
       line-height: 1;
       font-family: "Noto Kufi Arabic", "Noto Sans Arabic", Tahoma, sans-serif;
     }
     .plate .flag-box .flag {
-      width: 34px; height: 22px;
-      border-radius: 2px;
+      width: 30px; height: 19px;
+      border-radius: 1.5px;
       overflow: hidden;
       border: 1px solid #333;
       display: flex; flex-direction: column;
-      box-shadow: 0 1px 2px rgba(0,0,0,.25);
+      box-shadow: 0 1px 2px rgba(0,0,0,.2);
     }
-    .plate .flag-box .flag .stripe {
-      flex: 1; width: 100%;
-    }
+    .plate .flag-box .flag .stripe { flex: 1; width: 100%; }
     .plate .flag-box .flag .green { background: #007A3D; }
     .plate .flag-box .flag .white {
       background: #fff;
       display: flex; align-items: center; justify-content: center;
-      gap: 2px;
+      gap: 1.5px;
     }
     .plate .flag-box .flag .white .star {
-      width: 5px; height: 5px;
+      width: 4.5px; height: 4.5px;
       background: #CE1126;
       clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
     }
     .plate .flag-box .flag .black { background: #000; }
     .plate .flag-box .syr {
-      font-size: 10px;
+      font-size: 9px;
       font-weight: 900;
       color: #111;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.4px;
       line-height: 1;
       font-family: Arial, Helvetica, sans-serif;
     }
     @media (max-width: 680px) {
-      .plate { min-width: 220px; height: 54px; }
-      .plate .left-num { font-size: 24px; min-width: 48px; padding: 0 4px 0 8px; }
-      .plate .right-num { font-size: 24px; letter-spacing: 2px; padding: 0 8px 0 6px; }
-      .plate .flag-box { width: 46px; }
-      .plate .flag-box .ar { font-size: 10px; }
-      .plate .flag-box .flag { width: 30px; height: 19px; }
+      .plate { height: 48px; }
+      .plate .left-num { font-size: 21px; padding: 0 8px 0 10px; }
+      .plate .right-num { font-size: 21px; letter-spacing: 2px; padding: 0 10px 0 8px; }
+      .plate .flag-box { width: 42px; }
+      .plate .flag-box .ar { font-size: 9px; }
+      .plate .flag-box .flag { width: 26px; height: 17px; }
       .plate .flag-box .flag .white .star { width: 4px; height: 4px; }
-      .plate .flag-box .syr { font-size: 9px; }
+      .plate .flag-box .syr { font-size: 8px; }
     }
 
     .blocks { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
@@ -514,9 +507,9 @@
       const res = await jsonpLoad();
       if (!res || res.ok !== true) throw new Error(res?.error || "استجابة غير صالحة");
       allData = Array.isArray(res.data) ? res.data : [];
-      subLine.textContent = "آخر تحديث: " + new Date().toLocaleString("ar-SY", {
+      subLine.textContent = "آخر تحديث: " + new Date().toLocaleString("en-GB", {
         day: "2-digit", month: "2-digit", year: "numeric",
-        hour: "2-digit", minute: "2-digit"
+        hour: "2-digit", minute: "2-digit", hour12: false
       });
       render(allData);
     } catch (err) {
