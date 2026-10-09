@@ -43,7 +43,6 @@
       overflow-x: hidden;
     }
     .wrap { max-width: 1200px; margin: 0 auto; padding: 16px 12px 36px; }
-
     .topbar {
       display: flex; align-items: center; justify-content: space-between; gap: 12px;
       padding: 12px 14px; border-radius: var(--r);
@@ -72,7 +71,6 @@
       color: var(--muted); font-weight: 800; font-size: var(--fs1); white-space: nowrap;
     }
     @media (max-width: 680px) { .topbar { position: static; } }
-
     .section {
       margin-top: 14px; padding: 12px; border-radius: var(--r);
       border: 1px solid rgba(255,255,255,.07); background: rgba(255,255,255,.02);
@@ -80,14 +78,12 @@
     .grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; }
     @media (max-width: 1050px) { .grid { grid-template-columns: repeat(2, minmax(0,1fr)); } }
     @media (max-width: 680px) { .grid { grid-template-columns: 1fr; } }
-
     .card {
       border-radius: var(--r); border: 1.5px solid rgba(255,255,255,.14);
       background: linear-gradient(180deg, rgba(255,255,255,.035), rgba(0,0,0,.12));
       box-shadow: var(--shadow); overflow: hidden;
     }
     .cardInner { padding: 14px; display: flex; flex-direction: column; gap: 12px; }
-
     .metaRow {
       display: flex; align-items: center; justify-content: space-between;
       gap: 10px; flex-wrap: wrap;
@@ -101,7 +97,6 @@
       border: 1px solid rgba(61,155,133,.35); background: rgba(61,155,133,.14);
       white-space: nowrap;
     }
-
     .driverRow {
       font-size: var(--fs1); color: var(--muted);
       display: flex; flex-wrap: wrap; gap: 12px; align-items: center;
@@ -113,7 +108,6 @@
     }
     .phone-link:hover { color: var(--brand); }
     .phone-icon { width: 15px; height: 15px; fill: currentColor; flex: 0 0 auto; }
-
     /* Syrian official plate – balanced & elegant */
     .plateWrap {
       display: flex; justify-content: center; width: 100%;
@@ -213,7 +207,6 @@
       .plate .flag-box .flag .white .star { width: 4px; height: 4px; }
       .plate .flag-box .syr { font-size: 8px; }
     }
-
     .blocks { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     @media (max-width: 680px) { .blocks { grid-template-columns: 1fr; } }
     .block {
@@ -236,12 +229,10 @@
     .badge.follow { border-color: rgba(224,122,31,.4); }
     .badge.safe, .badge.long { border-color: rgba(45,211,111,.35); }
     .badge.missing { border-color: rgba(255,255,255,.2); color: rgba(234,242,242,.85); }
-
     .days { margin-top: 8px; display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
     .daysNum { font-size: var(--fsDays); font-weight: 900; line-height: 1; }
     .daysTxt { font-size: var(--fs2); font-weight: 800; color: rgba(234,242,242,.9); }
     .daysMissing { margin-top: 8px; font-size: var(--fs2); font-weight: 800; color: rgba(234,242,242,.8); }
-
     .bar {
       margin-top: 8px; height: 9px; border-radius: 999px;
       border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.08); overflow: hidden;
@@ -252,7 +243,6 @@
     .bar.alert > span { background: linear-gradient(90deg, #ffcc00, #e07a1f); }
     .bar.urgent > span, .bar.expired > span { background: linear-gradient(90deg, #ff3b4e, #ff5c6c); }
     .bar.missing > span { width: 25%; background: linear-gradient(90deg, rgba(255,255,255,.25), rgba(255,255,255,.1)); }
-
     .empty, .loading, .error {
       padding: 28px 16px; border-radius: var(--r);
       border: 1px dashed rgba(255,255,255,.15);
@@ -286,22 +276,18 @@
       </div>
       <div class="pill" id="countPill">— سيارة</div>
     </div>
-
     <div class="section">
       <div class="grid" id="grid">
         <div class="loading"><div class="spinner"></div>جاري تحميل البيانات...</div>
       </div>
     </div>
   </div>
-
 <script>
   const API_URL = "https://script.google.com/macros/s/AKfycbwMa3xvwodCJ8ELoETkcqIMMcW6OjGw7ipazpKOK4j1BpZuVJiNZo2G72YLbAvtfbpP/exec";
   const AUTO_REFRESH_MS = 60000;
-
   const grid = document.getElementById("grid");
   const subLine = document.getElementById("subLine");
   const countPill = document.getElementById("countPill");
-
   let allData = [];
 
   function escapeHtml(s) {
@@ -314,16 +300,29 @@
     if (val == null || val === "") return null;
     const s = String(val).trim();
     if (!s) return null;
-    if (/^\d{1,2}[-\/]\d{1,2}[-\/]\d{4}$/.test(s)) {
-      const parts = s.split(/[-\/]/).map(Number);
-      const dt = new Date(parts[2], parts[1] - 1, parts[0]);
-      return isNaN(dt.getTime()) ? null : dt;
+
+    // DD/MM/YYYY أو DD-MM-YYYY
+    let m = s.match(/^(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})$/);
+    if (m) {
+      const day = +m[1], month = +m[2], year = +m[3];
+      const dt = new Date(year, month - 1, day);
+      if (dt.getFullYear() === year && dt.getMonth() === month - 1 && dt.getDate() === day) {
+        return dt;
+      }
+      return null;
     }
-    if (/^\d{4}[-\/]\d{1,2}[-\/]\d{1,2}$/.test(s)) {
-      const parts = s.split(/[-\/]/).map(Number);
-      const dt = new Date(parts[0], parts[1] - 1, parts[2]);
-      return isNaN(dt.getTime()) ? null : dt;
+
+    // YYYY-MM-DD أو YYYY/MM/DD
+    m = s.match(/^(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})$/);
+    if (m) {
+      const year = +m[1], month = +m[2], day = +m[3];
+      const dt = new Date(year, month - 1, day);
+      if (dt.getFullYear() === year && dt.getMonth() === month - 1 && dt.getDate() === day) {
+        return dt;
+      }
+      return null;
     }
+
     const fallback = new Date(s);
     return isNaN(fallback.getTime()) ? null : fallback;
   }
@@ -331,11 +330,15 @@
   function daysRemaining(dateVal) {
     const dt = parseAnyDate(dateVal);
     if (!dt) return null;
+
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    const x = new Date(dt);
-    x.setHours(0, 0, 0, 0);
-    return Math.round((x - today) / 86400000);
+
+    const target = new Date(dt);
+    target.setHours(0, 0, 0, 0);
+
+    // استخدام Math.floor لتجنب أخطاء الكسور الناتجة عن فروق التوقيت
+    return Math.floor((target.getTime() - today.getTime()) / 86400000);
   }
 
   function statusForDays(d) {
@@ -373,10 +376,25 @@
   function blockHTML(title, days) {
     const st = statusForDays(days);
     const w = barWidth(days);
-    const shown = days === null ? null : (days < 0 ? 0 : days);
-    const daysPart = shown === null
-      ? `<div class="daysMissing">غير محدد</div>`
-      : `<div class="days"><div class="daysNum">${shown}</div><div class="daysTxt">يوم متبقي</div></div>`;
+
+    let daysPart;
+    if (days === null) {
+      daysPart = `<div class="daysMissing">غير محدد</div>`;
+    } else if (days < 0) {
+      // عرض الرقم السالب مع نص "يوم متأخر"
+      daysPart = `
+        <div class="days">
+          <div class="daysNum">${days}</div>
+          <div class="daysTxt">يوم متأخر</div>
+        </div>`;
+    } else {
+      daysPart = `
+        <div class="days">
+          <div class="daysNum">${days}</div>
+          <div class="daysTxt">يوم متبقي</div>
+        </div>`;
+    }
+
     return `
       <div class="block">
         <div class="blockTop">
@@ -426,7 +444,6 @@
             <div class="vehicleName" title="${escapeHtml(vehicle)}">${escapeHtml(vehicle)}</div>
             <div class="branchTag">${escapeHtml(branch)}</div>
           </div>
-
           <div class="plateWrap">
             <div class="plate" title="لوحة سورية – ${escapeHtml(plateRaw)}">
               ${leftHtml}
@@ -446,12 +463,10 @@
               <div class="right-num">${escapeHtml(right || "—")}</div>
             </div>
           </div>
-
           <div class="driverRow">
             <span>السائق: <b>${escapeHtml(driver)}</b></span>
             ${phonePart}
           </div>
-
           <div class="blocks">
             ${blockHTML("المعاينة", inspDays)}
             ${blockHTML("الفحص الدوري", perDays)}
@@ -463,7 +478,7 @@
   function minDue(d1, d2) {
     const arr = [d1, d2].filter(v => v !== null);
     if (!arr.length) return 999999;
-    if (arr.some(v => v < 0)) return -999999;
+    if (arr.some(v => v < 0)) return Math.min(...arr.filter(v => v < 0));
     return Math.min(...arr);
   }
 
